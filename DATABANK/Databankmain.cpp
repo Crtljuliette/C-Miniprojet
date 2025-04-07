@@ -1,4 +1,6 @@
-#include "Databank/Databank.h"
+#include "DATABANK/Databank.h"
+#include "DATE/Date.h"
+#include "STATION/Station.h"
 #include <iostream>
 #include <iomanip>
 
@@ -7,7 +9,7 @@ int main() {
     try {
         // Charger la banque de données
         std::cout << "Chargement des données..." << std::endl;
-        Databank Databank("stations.csv", "data.csv");
+        Databank Databank("stations.csv", "donnees.csv");
         std::cout << "Données chargées avec succès." << std::endl;
 
         // Afficher toutes les stations

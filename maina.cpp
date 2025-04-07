@@ -2,7 +2,7 @@
 #include "Ressources-20250407/RadarImage.h"
 #include "Ressources-20250407/RadarImage.cpp"
 #include "radar/2024-11-02.tif"
-
+/*
 int main() {
 
     const std::string filename = "radar/2024-11-02.tif";
@@ -61,3 +61,4 @@ int main() {
 
     return 0;
 }
+/*/

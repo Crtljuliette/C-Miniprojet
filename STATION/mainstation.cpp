@@ -1,6 +1,6 @@
-#include "station/Station.h"
+#include "STATION/Station.h"
 #include "DATE/Date.h"
-#include "station/Station.cpp"
+#include "STATION/Station.cpp"
 #include <iostream>
 #include <fstream>
 #include <vector>

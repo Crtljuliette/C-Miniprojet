@@ -1,2 +1,2 @@
+run = "g++ -std=c++11 -o testDate Date.cpp main.cpp"
 language = "cpp"
-run = "g++ -o main main.cpp && ./main"

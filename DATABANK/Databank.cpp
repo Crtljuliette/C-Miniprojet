@@ -1,4 +1,4 @@
-#include "Databank/Databank.h"
+#include "DATABANK/Databank.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -9,8 +9,8 @@
 
 // Constructeur
 Databank::Databank(const std::string& stationsFile, const std::string& dataFile) {
-    loadStations(stationsFile);
-    loadData(dataFile);
+    loadStations("STATION/stations.csv");
+    loadData("donnees.csv");
 }
 
 // Méthode pour charger les stations depuis le fichier CSV
