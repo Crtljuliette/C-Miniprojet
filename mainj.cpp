@@ -1,6 +1,5 @@
 #include <iostream>
-#include "DATE/Date.cpp"
-
+#include "DATE/Date.h"
 
 int main() {
     try {
@@ -12,32 +11,45 @@ int main() {
         Date specificDate(2024, 11, 29);
         std::cout << "Date spécifique: " << specificDate << std::endl;
 
-        // Test des opérateurs comme dans l'énoncé
-        std::cout << "Test des opérateurs selon l'énoncé:" << std::endl;
-        Date d(2024, 11, 29);  // 29 novembre 2024
-        std::cout << "Date initiale: " << d << std::endl;
+        // Test des accesseurs
+        std::cout << "Année: " << specificDate.getYear() << std::endl;
+        std::cout << "Mois: " << specificDate.getMonth() << std::endl;
+        std::cout << "Jour: " << specificDate.getDay() << std::endl;
 
-        d += 20;
-        std::cout << "Après d += 20: " << d << std::endl;  // 19 décembre 2024
+        // Test de l'opérateur +=
+        specificDate += 20;
+        std::cout << "Après ajout de 20 jours: " << specificDate << std::endl;
 
-        ++d;
-        std::cout << "Après ++d: " << d << std::endl;  // 20 décembre 2024
+        // Test de l'opérateur ++
+        ++specificDate;
+        std::cout << "Après incrémentation: " << specificDate << std::endl;
 
-        Date noel = d + 5;
-        std::cout << "noel = d + 5: " << noel << std::endl;  // 25 décembre 2024
-        std::cout << "d reste: " << d << std::endl;  // toujours 20 décembre 2024
+        // Test de l'opérateur +
+        Date noel = specificDate + 5;
+        std::cout << "Noël: " << noel << std::endl;
+        std::cout << "La date originale reste: " << specificDate << std::endl;
 
         // Test des opérateurs de comparaison
-        std::cout << "Test des opérateurs de comparaison:" << std::endl;
-        std::cout << "d < noel: " << (d < noel ? "vrai" : "faux") << std::endl;
-        std::cout << "noel < d: " << (noel < d ? "vrai" : "faux") << std::endl;
-        std::cout << "d == d: " << (d == d ? "vrai" : "faux") << std::endl;
-        std::cout << "d == noel: " << (d == noel ? "vrai" : "faux") << std::endl;
+        Date date1(2024, 12, 15);
+        Date date2(2024, 12, 25);
+        std::cout << "date1 < date2: " << (date1 < date2 ? "vrai" : "faux") << std::endl;
+        std::cout << "date1 == date2: " << (date1 == date2 ? "vrai" : "faux") << std::endl;
 
-        // Test date invalide
-        std::cout << "Test date invalide:" << std::endl;
-        Date invalidDate(2024, 2, 29);
-        std::cout << "Date invalide: " << invalidDate << std::endl;
+        // Test de dates hors limites
+        try {
+            Date invalidDate(2023, 10, 1); // Avant la plage
+            std::cout << "Cette ligne ne devrait pas s'afficher!" << std::endl;
+        } catch (const std::exception& e) {
+            std::cout << "Exception attendue: " << e.what() << std::endl;
+        }
+
+        try {
+            Date invalidDate(2025, 3, 1); // Après la plage
+            std::cout << "Cette ligne ne devrait pas s'afficher!" << std::endl;
+        } catch (const std::exception& e) {
+            std::cout << "Exception attendue: " << e.what() << std::endl;
+        }
+
     } catch (const std::exception& e) {
         std::cerr << "Erreur: " << e.what() << std::endl;
         return 1;
