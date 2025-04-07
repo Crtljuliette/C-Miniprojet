@@ -6,20 +6,20 @@
 
 class Station {
 private:
-    std::string numer_sta;
-    std::string nom;
-    double latitude;
-    double longitude;
-    double altitude;
+    std::string NUM_POSTE;
+    std::string NOM_USUEL;
+    double LAT;
+    double LON;
+    double ALTI;
 
 public:
     Station(const std::string& csvLine);
 
-    std::string getNumerSta() const;
-    std::string getNom() const;
-    double getLatitude() const;
-    double getLongitude() const;
-    double getAltitude() const;
+    std::string getNUM_POSTE() const;
+    std::string getNOM_USUEL() const;
+    double getLAT() const;
+    double getLON() const;
+    double getALTI() const;
 
     // Opérateurs de comparaison pour utiliser Station
     bool operator==(const Station& other) const;

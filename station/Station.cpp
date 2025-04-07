@@ -1,7 +1,7 @@
-//numer_sta : identifiant unique de la station
-//nom : nom de la station
-//latitude / longitude : localisation géographique
-//altitude : en mètres
+//NUM_POSTE : identifiant unique de la station
+//NOM_USUEL : NOM_USUEL de la station
+//LAT / LON : localisation géographique
+//ALTI : en mètres
 
 #include <iostream>
 #include <string>
@@ -12,40 +12,40 @@ Station::Station(const std::string& csvLine) {
     std::stringstream ss(csvLine);
     std::string field;
 
-    std::getline(ss, numer_sta, ';');   // idd station
-    std::getline(ss, nom, ';');         // nom station
-    std::getline(ss, field, ';');       // latitude
-    latitude = std::stod(field);
-    std::getline(ss, field, ';');       // longitude
-    longitude = std::stod(field);
-    std::getline(ss, field, ';');       // altitude
-    altitude = std::stod(field);
+    std::getline(ss, NUM_POSTE, ';');   // idd station
+    std::getline(ss, NOM_USUEL, ';');         // NOM_USUEL station
+    std::getline(ss, field, ';');       // LAT
+    LAT = std::stod(field);
+    std::getline(ss, field, ';');       // LON
+    LON = std::stod(field);
+    std::getline(ss, field, ';');       // ALTI
+    ALTI = std::stod(field);
 }
 
-std::string Station::getNumerSta() const {
-    return numer_sta;
+std::string Station::getNUM_POSTE() const {
+    return NUM_POSTE;
 }
 
-std::string Station::getNom() const {
-    return nom;
+std::string Station::getNOM_USUEL() const {
+    return NOM_USUEL;
 }
 
-double Station::getLatitude() const {
-    return latitude;
+double Station::getLAT() const {
+    return LAT;
 }
 
-double Station::getLongitude() const {
-    return longitude;
+double Station::getLON() const {
+    return LON;
 }
 
-double Station::getAltitude() const {
-    return altitude;
+double Station::getALTI() const {
+    return ALTI;
 }
 
 bool Station::operator==(const Station& other) const {
-    return numer_sta == other.numer_sta;
+    return NUM_POSTE == other.NUM_POSTE;
 }
 
 bool Station::operator<(const Station& other) const {
-    return numer_sta < other.numer_sta;
+    return NUM_POSTE < other.NUM_POSTE;
 }
