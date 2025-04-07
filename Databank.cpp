@@ -139,8 +139,8 @@ Databank::const_iterator Databank::end() const {
 }
 
 // Méthode pour obtenir la pluviométrie pour une station et une date données
-double Databank::getRainfall(const Station& station, const Date& date) const {
-    auto key = std::make_pair(station.getNUM_POSTE(), date);
+float Databank::getRainfall(int Station, const std::string& date) {
+    auto key = std::make_pair(Station.getNUM_POSTE(), date);
     auto it = data.find(key);
 
     if (it != data.end()) {

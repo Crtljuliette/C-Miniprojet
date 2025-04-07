@@ -36,7 +36,7 @@ public:
     const_iterator end() const;
 
     // Méthode pour obtenir la pluviométrie pour une station et une date données
-    double getRainfall(const Station& station, const Date& date) const;
+    float getRainfall(int Station, const std::string& date);
 };
 
 #endif // DATABANK_H
