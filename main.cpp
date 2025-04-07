@@ -4,7 +4,7 @@
 #include "radar/2024-11-02.tif"
 
 int main() {
-    
+
     const std::string filename = "radar/2024-11-02.tif";
 
 
