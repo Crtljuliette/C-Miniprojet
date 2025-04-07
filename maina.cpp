@@ -1,13 +1,9 @@
+
 #include <iostream>
 #include "Ressources-20250407/RadarImage.h"
-#include "Ressources-20250407/RadarImage.cpp"
-#include "radar/2024-11-02.tif"
 
 int main() {
-
     const std::string filename = "radar/2024-11-02.tif";
-
-
     RadarImage radar(filename);
 
     // Vérification de la validité de l'image radar
