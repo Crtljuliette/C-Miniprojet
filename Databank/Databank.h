@@ -1,12 +1,12 @@
 #ifndef DATABANK_H
 #define DATABANK_H
 
-#include "DATE/Date.h"
-#include "station/Station.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
 #include <cmath>
+#include "../DATE/Date.h"
+#include "../station/Station.h"
 
 class Databank {
 public:
