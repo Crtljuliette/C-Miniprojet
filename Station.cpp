@@ -2,5 +2,7 @@
 //nom : nom de la station
 //latitude / longitude : localisation géographique
 //altitude : en mètres
-//
-//
+
+#include <iostream>
+#include <string>
+#include "Station.h"
