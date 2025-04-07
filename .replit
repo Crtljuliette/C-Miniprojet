@@ -1,2 +1,18 @@
 run = "g++ -std=c++11 -o testDate Date.cpp main.cpp"
 language = "cpp"
+
+[workflows]
+runButton = "Run"
+
+[[workflows.workflow]]
+name = "Run"
+author = 40030125
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "g++ -std=c++11 -o program maina.cpp Ressources-20250407/RadarImage.cpp"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "./program"
