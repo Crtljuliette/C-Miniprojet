@@ -1,15 +1,17 @@
-#include "DATABANK/Databank.h"
+#include "Databank.h"
+#include "Station.h"
+#include "Date.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <algorithm>
 #include <set>
-#include "STATION/Station.h"
-#include "DATE/Date.h"
+#include "Station.h"
+#include "Date.h"
 
 // Constructeur
 Databank::Databank(const std::string& stationsFile, const std::string& dataFile) {
-    loadStations("STATION/stations.csv");
+    loadStations("stations.csv");
     loadData("donnees.csv");
 }
 

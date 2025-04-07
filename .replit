@@ -1,25 +1,2 @@
-run = "g++ -std=c++11 -o testDate Date.cpp DATABANK/Databankmain.cpp"
+run = "g++ -o main main.cpp && ./main"
 language = "cpp"
-modules = ["cpp-clang14", "c-clang14"]
-
-[workflows]
-runButton = "Run"
-
-[[workflows.workflow]]
-name = "Run"
-author = 40030125
-mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "g++ -std=c++11 -I. -o program maina.cpp DATE/Date.cpp DATABANK/Databank.cpp STATION/Station.cpp Ressources-20250407/RadarImage.cpp Ressources-20250407/tinytiff/tinytiffreader.cpp Ressources-20250407/tinytiff/tinytiff_ctools_internal.cpp"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "./program"
-
-[deployment]
-run = ["sh", "-c", "g++ -std=c++11 -o testDate Date.cpp DATABANK/Databankmain.cpp"]
-
-[nix]
-channel = "stable-24_05"

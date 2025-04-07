@@ -5,8 +5,8 @@
 #include <map>
 #include <string>
 #include <cmath>
-#include "DATE/Date.h"
-#include "STATION/Station.h"
+#include "Date.h"
+#include "Station.h"
 
 class Databank {
 private:
