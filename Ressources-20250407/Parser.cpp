@@ -65,7 +65,7 @@ void Parser::parseExampleFile(const std::string& file)
 
 
 // fonction main de test/démonstration
-int main()
+// int main()
 {
 	// On crée un parseur
 	Parser p;

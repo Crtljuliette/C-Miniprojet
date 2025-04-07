@@ -2,7 +2,17 @@
 #include "Ressources-20250407/RadarImage.h"
 #include "Ressources-20250407/RadarImage.cpp"
 #include "radar/2024-11-02.tif"
+<<<<<<< HEAD
 /*/
+=======
+#include "Ressources-20250407/tinytiff/tinytiff.h"
+#include "Ressources-20250407/tinytiff/tinytiffreader.h"
+#include "Ressources-20250407/tinytiff/tinytiffwriter.h"
+#include "Ressources-20250407/tinytiff/tinytiff_ctools.h"
+#include "Ressources-20250407/tinytiff/tinytiff_ctools_internal.h"
+#include "Ressources-20250407/tinytiff/tiff_definitions_internal.h"
+
+>>>>>>> 0791183 (main)
 int main() {
     
     const std::string filename = "radar/2024-11-02.tif";
@@ -18,6 +28,19 @@ int main() {
 
     std::cout << "Radar image loaded successfully." << std::endl;
     std::cout << "Width: " << radar.getWidth() << ", Height: " << radar.getHeight() << std::endl;
+    const int testRows[] = {0, 10, radar.getHeight()/2, radar.getHeight()-1};
+    const int testCols[] = {0, 10, radar.getWidth()/2, radar.getWidth()-1};
+
+    for (int row : testRows) {
+          for (int col : testCols) {
+                    uint16_t value = radar.getDataAtPixel(row, col);
+                    std::cout << "Pixel at (" << row << ", " << col << "): " 
+                              << value << " (Rainfall: " << value * 0.01 << " mm/h)" << std::endl;
+          }
+    }
+
+    return 0;
+}
     std::cout << "Geographic bounds: " << std::endl;
     std::cout << "  Latitude: " << radar.getMinLatitude() << " to " << radar.getMaxLatitude() << std::endl;
     std::cout << "  Longitude: " << radar.getMinLongitude() << " to " << radar.getMaxLongitude() << std::endl;

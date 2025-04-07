@@ -83,12 +83,11 @@ bool RadarImage::isValid() const
 
 uint16_t RadarImage::getDataAtPixel(int row, int column) const
 {
-	if (row < 0 || row >= m_height || column < 0 || column >= m_width) {
-		std::cerr << "Pixel hors-limite " << row << "x" << column << "\n";
-		return 0;
-	}
-
-	return m_data[row * m_height + column];
+		if (row < 0 || row >= m_height || column < 0 || column >= m_width) {
+				std::cerr << "Pixel hors-limite " << row << "x" << column << "\n";
+				return 0;
+		}
+		return m_data[row * m_width + column];  
 }
 
 float RadarImage::getRainfallAtCoordinates(float lat, float lon) const
