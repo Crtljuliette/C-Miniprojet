@@ -1,4 +1,2 @@
-modules = ["cpp-clang14", "c-clang14"]
-
-[nix]
-channel = "stable-24_05"
+language = "cpp"
+run = "g++ -o main main.cpp && ./main"
