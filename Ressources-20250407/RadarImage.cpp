@@ -90,3 +90,30 @@ uint16_t RadarImage::getDataAtPixel(int row, int column) const
 
 	return m_data[row * m_height + column];
 }
+
+float RadarImage::getRainfallAtCoordinates(float lat, float lon) const
+{
+		// Verification des coordonnées
+		if (lat < MIN_LATITUDE || lat > MAX_LATITUDE || 
+				lon < MIN_LONGITUDE || lon > MAX_LONGITUDE) {
+				std::cerr << "Coordinates out of bounds: lat=" << lat << ", lon=" << lon << "\n";
+				return 0.0f;
+		}
+
+		// Calculer la ligne (north to south: row 0 is MAX_LATITUDE)
+		// Orientation inversée (nord au sud)
+		float latRange = MAX_LATITUDE - MIN_LATITUDE;
+		int row = static_cast<int>((MAX_LATITUDE - lat) / latRange * m_height);
+
+		// Calcule de la colonne (west to east: column 0 is MIN_LONGITUDE)
+		float lonRange = MAX_LONGITUDE - MIN_LONGITUDE;
+		int column = static_cast<int>((lon - MIN_LONGITUDE) / lonRange * m_width);
+
+		// Valeur de la ligne et de la colonne dans les limites
+		row = std::max(0, std::min(row, m_height - 1));
+		column = std::max(0, std::min(column, m_width - 1));
+
+		// Obtenir la valeur de la pluie à partir des données
+		uint16_t rawData = getDataAtPixel(row, column);
+		return rawData * CONVERSION_FACTOR;
+}

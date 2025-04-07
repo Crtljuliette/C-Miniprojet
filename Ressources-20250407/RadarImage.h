@@ -31,6 +31,8 @@ public:
 	int getHeight() const;
 	bool isValid() const;
 	uint16_t getDataAtPixel(int row, int column) const;
+	float getRainfallAtCoordinates(float lat, float lon) const;
+
 };
 
 #endif
