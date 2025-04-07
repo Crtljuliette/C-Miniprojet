@@ -1,42 +1,25 @@
-#ifndef DATABANK_H
-#define DATABANK_H
-
-#include <vector>
-#include <map>
-#include <string>
-#include <cmath>
+#include "Databank/Databank.h"
 #include "DATE/Date.h"
-#include "STATION/Station.h"
+#include <iostream>
 
-class Databank {
-private:
-    // Conteneur pour stocker les stations
-    std::vector<Station> stations;
+int main() {
+    Databank databank("stations.csv", "data.csv");
 
-    // Conteneur pour stocker les données pluviométriques indexées par station et par date
-    // Utilisation d'une map avec une paire (NUM_POSTE, Date) comme clé et la valeur pluviométrique comme valeur
-    std::map<std::pair<std::string, Date>, double> data;
+    std::cout << "Stations disponibles :\n";
+    for (auto it = databank.begin(); it != databank.end(); ++it) {
+        std::cout << "ID: " << it->getNumerSta() << ", Nom: " << it->getNom() << "\n";
+    }
 
-    // Méthodes privées pour charger les données
-    void loadStations(const std::string& stationsFile);
-    void loadData(const std::string& dataFile);
+    // Exemple d'utilisation pour obtenir la pluviométrie
+    Station station("07007,Paris-Montsouris,48.8167,2.3333,75.0");
+    Date date(2023, 10, 1);
+    double rainfall = databank.getRainfall(station, date);
+    if (!std::isnan(rainfall)) {
+        std::cout << "Pluviométrie pour " << station.getNom() << " le " << date.getDay() << "/"
+                  << date.getMonth() << "/" << date.getYear() << " : " << rainfall << " mm\n";
+    } else {
+        std::cout << "Aucune donnée disponible pour cette station et cette date.\n";
+    }
 
-public:
-    // Alias de type pour les itérateurs
-    using iterator = std::vector<Station>::iterator;
-    using const_iterator = std::vector<Station>::const_iterator;
-
-    // Constructeur
-    DataBank(const std::string& stationsFile, const std::string& dataFile);
-
-    // Méthodes pour accéder aux itérateurs du conteneur de stations
-    iterator begin();
-    iterator end();
-    const_iterator begin() const;
-    const_iterator end() const;
-
-    // Méthode pour obtenir la pluviométrie pour une station et une date données
-    double getRainfall(const Station& station, const Date& date) const;
-};
-
-#endif // DATABANK_H
+    return 0;
+}
