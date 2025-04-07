@@ -11,7 +11,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "g++ -std=c++11 -o program maina.cpp Ressources-20250407/RadarImage.cpp"
+args = "g++ -std=c++11 -o program maina.cpp Ressources-20250407/RadarImage.cpp Ressources-20250407/tinytiff/tinytiffreader.cpp"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"

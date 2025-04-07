@@ -6,7 +6,7 @@
 RadarImage::RadarImage(const std::string& filename) :
 	m_filename{filename}
 {
-	std::unique_ptr<TinyTIFFReaderFile, typeof(&TinyTIFFReader_close)> file{
+	std::unique_ptr<TinyTIFFReaderFile, decltype(&TinyTIFFReader_close)> file{
 		TinyTIFFReader_open(filename.c_str()), &TinyTIFFReader_close
 	};
 
