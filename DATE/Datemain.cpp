@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Date.h"
+#include "DATE/Date.cpp"
 
 int main() {
     try {
@@ -33,6 +33,10 @@ int main() {
         std::cout << "d == d: " << (d == d ? "vrai" : "faux") << std::endl;
         std::cout << "d == noel: " << (d == noel ? "vrai" : "faux") << std::endl;
 
+        // Test date invalide
+        std::cout << "Test date invalide:" << std::endl;
+        Date invalidDate(2024, 2, 29);
+        std::cout << "Date invalide: " << invalidDate << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "Erreur: " << e.what() << std::endl;
         return 1;
