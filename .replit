@@ -1,5 +1,6 @@
-run = "g++ -std=c++11 -o testDate Date.cpp main.cpp"
+run = "g++ -std=c++11 -o testDate Date.cpp DATABANK/Databankmain.cpp"
 language = "cpp"
+modules = ["cpp-clang14", "c-clang14"]
 
 [workflows]
 runButton = "Run"
@@ -16,3 +17,9 @@ args = "g++ -std=c++11 -I. -o program maina.cpp DATE/Date.cpp DATABANK/Databank.
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "./program"
+
+[deployment]
+run = ["sh", "-c", "g++ -std=c++11 -o testDate Date.cpp DATABANK/Databankmain.cpp"]
+
+[nix]
+channel = "stable-24_05"
