@@ -27,7 +27,7 @@ public:
     using const_iterator = std::vector<Station>::const_iterator;
 
     // Constructeur
-    DataBank(const std::string& stationsFile, const std::string& dataFile);
+    Databank(const std::string& stationsFile, const std::string& dataFile);
 
     // Méthodes pour accéder aux itérateurs du conteneur de stations
     iterator begin();
