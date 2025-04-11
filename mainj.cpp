@@ -1,53 +1,49 @@
+#include "Databank.h"
+#include "Date.h"
+#include "Station.h"
 #include <iostream>
-#include "DATE/Date.h"
+#include <iomanip>
 
 int main() {
     try {
-        // Test du constructeur par défaut
-        Date defaultDate;
-        std::cout << "Date par défaut: " << defaultDate << std::endl;
+        // Charger la banque de données
+        std::cout << "Chargement des données..." << std::endl;
+        Databank Databank("stations.csv", "donnees.csv");
+        std::cout << "Données chargées avec succès." << std::endl;
 
-        // Test du constructeur avec paramètres
-        Date specificDate(2024, 11, 29);
-        std::cout << "Date spécifique: " << specificDate << std::endl;
+        // Afficher toutes les stations
+        std::cout << "\nListe des stations:" << std::endl;
+        std::cout << std::setw(15) << "NUM_POSTE" << std::setw(25) << "NOM_USUEL" 
+                  << std::setw(10) << "LAT" << std::setw(10) << "LON" << std::setw(10) << "ALTI" << std::endl;
+        std::cout << std::string(70, '-') << std::endl;
 
-        // Test des accesseurs
-        std::cout << "Année: " << specificDate.getYear() << std::endl;
-        std::cout << "Mois: " << specificDate.getMonth() << std::endl;
-        std::cout << "Jour: " << specificDate.getDay() << std::endl;
-
-        // Test de l'opérateur +=
-        specificDate += 20;
-        std::cout << "Après ajout de 20 jours: " << specificDate << std::endl;
-
-        // Test de l'opérateur ++
-        ++specificDate;
-        std::cout << "Après incrémentation: " << specificDate << std::endl;
-
-        // Test de l'opérateur +
-        Date noel = specificDate + 5;
-        std::cout << "Noël: " << noel << std::endl;
-        std::cout << "La date originale reste: " << specificDate << std::endl;
-
-        // Test des opérateurs de comparaison
-        Date date1(2024, 12, 15);
-        Date date2(2024, 12, 25);
-        std::cout << "date1 < date2: " << (date1 < date2 ? "vrai" : "faux") << std::endl;
-        std::cout << "date1 == date2: " << (date1 == date2 ? "vrai" : "faux") << std::endl;
-
-        // Test de dates hors limites
-        try {
-            Date invalidDate(2023, 10, 1); // Avant la plage
-            std::cout << "Cette ligne ne devrait pas s'afficher!" << std::endl;
-        } catch (const std::exception& e) {
-            std::cout << "Exception attendue: " << e.what() << std::endl;
+        for (const auto& station : Databank) {
+            std::cout << std::setw(15) << station.getNUM_POSTE() 
+                      << std::setw(25) << station.getNOM_USUEL()
+                      << std::setw(10) << std::fixed << std::setprecision(4) << station.getLAT()
+                      << std::setw(10) << std::fixed << std::setprecision(4) << station.getLON()
+                      << std::setw(10) << std::fixed << std::setprecision(1) << station.getALTI() << std::endl;
         }
 
-        try {
-            Date invalidDate(2025, 3, 1); // Après la plage
-            std::cout << "Cette ligne ne devrait pas s'afficher!" << std::endl;
-        } catch (const std::exception& e) {
-            std::cout << "Exception attendue: " << e.what() << std::endl;
+        // Test de récupération des données de pluie pour quelques dates et stations
+        std::cout << "\nTest de récupération des données de pluie:" << std::endl;
+
+        // Supposons que nous avons quelques stations et dates connues
+        if (Databank.begin() != Databank.end()) {
+            Station firstStation = *Databank.begin();
+            Date testDate(2024, 10, 15);  // Une date dans la période valide
+
+            double rainfall = Databank.getRainfall(firstStation, testDate);
+            std::cout << "Pluviométrie pour la station " << firstStation.getNOM_USUEL() 
+                      << " le " << testDate << ": ";
+
+            if (std::isnan(rainfall)) {
+                std::cout << "Pas de données disponibles" << std::endl;
+            } else {
+                std::cout << rainfall << " mm" << std::endl;
+            }
+        } else {
+            std::cout << "Aucune station disponible pour tester les données de pluie." << std::endl;
         }
 
     } catch (const std::exception& e) {

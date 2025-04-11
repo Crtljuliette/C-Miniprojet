@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include <string>
-#include "STATION/Station.h"
+#include "Station.h"
 #include <sstream>
 
 Station::Station(const std::string& csvLine) {
