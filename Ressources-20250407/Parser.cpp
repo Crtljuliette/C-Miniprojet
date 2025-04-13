@@ -63,7 +63,7 @@ void Parser::parseExampleFile(const std::string& file)
 	}
 }
 
-
+/*/
 // fonction main de test/démonstration
 // int main()
 {
@@ -73,3 +73,4 @@ void Parser::parseExampleFile(const std::string& file)
 	// On donne un nom de fichier à parser
 	p.parseExampleFile("fichier.csv");
 }
+/*/

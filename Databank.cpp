@@ -1,130 +1,113 @@
 #include "Databank.h"
-<<<<<<< HEAD
-=======
+#include "CsvWhitespace.h"
 #include "Station.h"
 #include "Date.h"
->>>>>>> 44487c9e15e9da2dbaf4a28fb0b4ffedbbde4651
+#include "Parser.h"
 #include <fstream>
-#include <sstream>
 #include <iostream>
-#include <algorithm>
-#include <set>
-#include "Station.h"
-#include "Date.h"
+#include <sstream>
 
 // Constructeur
-Databank::Databank(const std::string& stationsFile, const std::string& dataFile) {
-    loadStations("stations.csv");
-    loadData("donnees.csv");
+Databank::Databank(const std::string& stationsFilename, const std::string& dataFilename) {
+    loadStations(stationsFilename);
+    loadData(dataFilename);
 }
 
-// Méthode pour charger les stations depuis le fichier CSV
-void Databank::loadStations(const std::string& stationsFile) {
-    std::ifstream file(stationsFile);
+// Méthode privée pour charger la liste des stations
+void Databank::loadStations(const std::string& stationsFilename) {
+    // Ouverture du fichier
+    std::ifstream file(stationsFilename);
     if (!file.is_open()) {
-        throw std::runtime_error("Impossible d'ouvrir le fichier de stations: " + stationsFile);
+        std::cerr << "Erreur: Impossible d'ouvrir le fichier des stations: " << stationsFilename << std::endl;
+        return;
     }
 
+    // Application du localisateur pour le parsing des CSV
+    file.imbue(std::locale(file.getloc(), new CsvWhitespace));
+
+    // Lecture de l'en-tête (pour l'ignorer)
+    std::string header;
+    std::getline(file, header);
+
+    // Lecture des stations
     std::string line;
-    // Ignorer la première ligne (en-têtes)
-    std::getline(file, line);
-
-    // Lire chaque ligne et créer un objet Station
     while (std::getline(file, line)) {
-        try {
-            Station station(line);
-            stations.push_back(station);
-        } catch (const std::exception& e) {
-            std::cerr << "Erreur lors du traitement d'une station: " << e.what() << std::endl;
-            std::cerr << "Ligne: " << line << std::endl;
-        }
+        if (line.empty()) continue;
+
+        // Création de la station à partir de la ligne CSV
+        Station station(line);
+
+        // Ajout de la station dans le conteneur, en utilisant insert au lieu de []
+        stations.insert(std::make_pair(station.getNUM_POSTE(), station));
     }
 
-    // Trier les stations (optionnel, mais peut être utile)
-    std::sort(stations.begin(), stations.end());
+    file.close();
 }
 
-// Méthode pour charger les données pluviométriques depuis le fichier CSV
-void Databank::loadData(const std::string& dataFile) {
-    std::ifstream file(dataFile);
+// Méthode privée pour charger les données des stations
+void Databank::loadData(const std::string& dataFilename) {
+    // Ouverture du fichier
+    std::ifstream file(dataFilename);
     if (!file.is_open()) {
-        throw std::runtime_error("Impossible d'ouvrir le fichier de données: " + dataFile);
+        std::cerr << "Erreur: Impossible d'ouvrir le fichier de données: " << dataFilename << std::endl;
+        return;
     }
 
+    // Application du localisateur pour le parsing des CSV
+    file.imbue(std::locale(file.getloc(), new CsvWhitespace));
+
+    // Lecture de l'en-tête (pour l'ignorer)
+    std::string header;
+    std::getline(file, header);
+
+    // Lecture des données
     std::string line;
-    // Ignorer la première ligne (en-têtes)
-    std::getline(file, line);
-
-    // Ensemble des dates pour lesquelles nous avons des images radar
-    // Note: Cet ensemble doit être rempli avec les dates pour lesquelles il y a des images radar disponibles
-    // Pour ce TP, nous supposons que les dates sont entre le 1er octobre 2024 et le 28 février 2025
-    std::set<Date> validDates;
-    // Remplir avec les dates valides (à adapter selon les images radar disponibles)
-    for (int month = 10; month <= 12; ++month) {
-        for (int day = 1; day <= 31; ++day) {
-            if ((month == 11 && day > 30) || (month == 2 && day > 29)) continue;
-            try {
-                validDates.insert(Date(2024, month, day));
-            } catch (const std::exception&) {
-                // Ignorer les dates invalides
-            }
-        }
-    }
-    for (int month = 1; month <= 2; ++month) {
-        for (int day = 1; day <= 31; ++day) {
-            if (month == 2 && day > 28) continue;
-            try {
-                validDates.insert(Date(2025, month, day));
-            } catch (const std::exception&) {
-                // Ignorer les dates invalides
-            }
-        }
-    }
-
-    // Lire chaque ligne du fichier de données
     while (std::getline(file, line)) {
-        std::stringstream ss(line);
-        std::string field;
+        if (line.empty()) continue;
 
-        // Format attendu: NUM_POSTE;DATE;PRECIP_Q (et potentiellement d'autres champs)
-        std::string numPoste;
-        std::string dateStr;
-        std::string precipStr;
+        // Utilisation d'un stringstream avec notre localisateur CSV
+        std::istringstream iss(line);
+        iss.imbue(std::locale(iss.getloc(), new CsvWhitespace));
 
-        std::getline(ss, numPoste, ';');  // NUM_POSTE
-        std::getline(ss, dateStr, ';');   // DATE (format attendu: YYYY-MM-DD)
-        std::getline(ss, precipStr, ';'); // PRECIP_Q
+        // Variables pour stocker les données extraites
+        std::string stationId, stationName, latStr, lonStr, altiStr, dateStr, rainfallStr;
+        std::string tempMin, tempMax, tempMean; // Autres colonnes présentes dans le fichier
 
-        try {
-            // Parser la date
-            std::stringstream dateSS(dateStr);
-            std::string yearStr, monthStr, dayStr;
-            std::getline(dateSS, yearStr, '-');
-            std::getline(dateSS, monthStr, '-');
-            std::getline(dateSS, dayStr);
+        // Lecture des colonnes selon l'ordre dans le fichier
+        // NUM_POSTE;NOM_USUEL;LAT;LON;ALTI;AAAAMMJJ;RR;TN;TX;TM
+        iss >> stationId >> stationName >> latStr >> lonStr >> altiStr 
+            >> dateStr >> rainfallStr >> tempMin >> tempMax >> tempMean;
 
-            int year = std::stoi(yearStr);
-            int month = std::stoi(monthStr);
-            int day = std::stoi(dayStr);
-
-            Date date(year, month, day);
-
-            // Vérifier si cette date est valide (a une image radar)
-            if (validDates.find(date) != validDates.end()) {
-                // Parser la pluviométrie
-                double precip = std::stod(precipStr);
-
-                // Stocker la donnée
-                data[std::make_pair(numPoste, date)] = precip;
-            }
-        } catch (const std::exception& e) {
-            std::cerr << "Erreur lors du traitement d'une donnée: " << e.what() << std::endl;
-            std::cerr << "Ligne: " << line << std::endl;
+        // Vérifier si la station existe dans notre liste
+        if (!hasStation(stationId)) {
+            continue; // Ignorer les données des stations inconnues
         }
+
+        // Convertir la date (format AAAAMMJJ)
+        int year = std::stoi(dateStr.substr(0, 4));
+        int month = std::stoi(dateStr.substr(4, 2));
+        int day = std::stoi(dateStr.substr(6, 2));
+
+        // Création de l'objet Date
+        Date date(year, month, day);
+
+        // Convertir la pluviométrie
+        float rainfall = NAN; // Par défaut, non disponible
+        try {
+            rainfall = std::stof(rainfallStr);
+        } catch (const std::exception& e) {
+            // En cas d'erreur de conversion, laisser à NAN
+        }
+
+        // Utiliser insert_or_assign pour les données de pluviométrie aussi
+        auto& dateMap = rainfall_data[stationId]; // On peut toujours utiliser [] ici car la map est de <string, map>
+        dateMap.insert_or_assign(date, rainfall);
     }
+
+    file.close();
 }
 
-// Méthodes pour accéder aux itérateurs du conteneur de stations
+// Méthodes pour itérer sur les stations
 Databank::iterator Databank::begin() {
     return stations.begin();
 }
@@ -141,14 +124,36 @@ Databank::const_iterator Databank::end() const {
     return stations.end();
 }
 
-// Méthode pour obtenir la pluviométrie pour une station et une date données
-float Databank::getRainfall(const Station& station, const std::string& date) {
-    auto key = std::make_pair(stations.getNUM_POSTE(), date);
-    auto it = data.find(key);
+// Accesseur pour récupérer la pluviométrie d'une station à une date donnée
+float Databank::getRainfallData(const Station& station, const Date& date) const {
+    std::string stationId = station.getNUM_POSTE();
 
-    if (it != data.end()) {
-        return it->second;
-    } else {
-        return NAN; // Not A Number si la donnée n'est pas disponible
+    // Vérifier si la station existe dans nos données
+    auto stationIt = rainfall_data.find(stationId);
+    if (stationIt == rainfall_data.end()) {
+        return NAN; // Station non trouvée
     }
+
+    // Vérifier si la date existe pour cette station
+    auto dateIt = stationIt->second.find(date);
+    if (dateIt == stationIt->second.end()) {
+        return NAN; // Pas de données pour cette date
+    }
+
+    // Retourner la valeur de pluviométrie
+    return dateIt->second;
+}
+
+// Méthode utilitaire pour vérifier si une station existe
+bool Databank::hasStation(const std::string& stationId) const {
+    return stations.find(stationId) != stations.end();
+}
+
+// Accesseur pour obtenir une station par son ID
+const Station* Databank::getStationById(const std::string& stationId) const {
+    auto it = stations.find(stationId);
+    if (it != stations.end()) {
+        return &(it->second);
+    }
+    return nullptr;
 }

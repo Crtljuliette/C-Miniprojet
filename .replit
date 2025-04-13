@@ -1,2 +1,2 @@
-run = "g++ -o main main.cpp && ./main"
+run = "g++ -std=c++17 -I Ressources-20250407 -I Ressources-20250407/tinytiff main.cpp Databank.cpp Station.cpp Date.cpp Ressources-20250407/Parser.cpp Ressources-20250407/CsvWhitespace.cpp Ressources-20250407/RadarImage.cpp Ressources-20250407/tinytiff/tinytiffreader.cpp Ressources-20250407/tinytiff/tinytiff_ctools_internal.cpp -o main && ./main"
 language = "cpp"

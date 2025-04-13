@@ -3,7 +3,7 @@
 #include "Ressources-20250407/RadarImage.h"
 #include "DATABANK/Databank.h"
 
-
+/*
 int main(){
   Databank db("STATION/stations.csv","donnees.csv");
   RadarImage radar("radar/2024-11-20.tif");
@@ -20,3 +20,4 @@ int main(){
   return 0;
 
 }
+/*/

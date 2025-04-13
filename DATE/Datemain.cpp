@@ -1,7 +1,7 @@
 #include <iostream>
 #include "DATE/Date.cpp"
 
-
+/*
 int main() {
     try {
         // Test du constructeur par défaut
@@ -45,3 +45,4 @@ int main() {
 
     return 0;
 }
+/*/

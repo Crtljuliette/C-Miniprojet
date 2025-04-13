@@ -4,7 +4,7 @@
 #include <iostream>
 #include <iomanip>
 
-
+/*
 int main() {
     try {
         // Charger la banque de données
@@ -54,3 +54,4 @@ int main() {
 
     return 0;
 }
+/*/
