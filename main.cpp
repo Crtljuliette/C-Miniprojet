@@ -71,7 +71,7 @@ int main() {
 
         // Exemple 2 : Rechercher une station spécifique par ID
         std::cout << "\n== Exemple 2: Recherche d'une station spécifique ==" << std::endl;
-        std::string searchId = "25005003"; // Remplacez par un ID valide de votre jeu de données
+        std::string searchId = ""; // Remplacez par un ID valide de votre jeu de données
         const Station* foundStation = databank.getStationById(searchId);
 
         if (foundStation) {

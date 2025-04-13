@@ -9,11 +9,8 @@ private:
     int year;
     int month;
     int day;
-
-    // Méthode privée pour vérifier si une date est valide
-    bool isValid(int y, int m, int d) const;
-
 public:
+    static bool isValid(int y, int m, int d) ;
     // Constructeurs
     Date(); // Initialise au 1er octobre 2024
     Date(int y, int m, int d);

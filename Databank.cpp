@@ -75,7 +75,7 @@ void Databank::loadData(const std::string& dataFilename) {
 
         // Lecture des colonnes selon l'ordre dans le fichier
         // NUM_POSTE;NOM_USUEL;LAT;LON;ALTI;AAAAMMJJ;RR;TN;TX;TM
-        iss >> stationId >> stationName >> latStr >> lonStr >> altiStr 
+        iss >> stationId >> stationName >> latStr >> lonStr >> altiStr
             >> dateStr >> rainfallStr >> tempMin >> tempMax >> tempMean;
 
         // Vérifier si la station existe dans notre liste
@@ -87,6 +87,13 @@ void Databank::loadData(const std::string& dataFilename) {
         int year = std::stoi(dateStr.substr(0, 4));
         int month = std::stoi(dateStr.substr(4, 2));
         int day = std::stoi(dateStr.substr(6, 2));
+
+        // Vérifier si la date est valide avant de créer l'objet Date
+        if (!Date::isValid(year, month, day)) {
+            std::cerr << "Avertissement: Date invalide détectée et ignorée: "
+                      << year << "-" << month << "-" << day << std::endl;
+            continue; // Ignorer les lignes avec des dates invalides
+        }
 
         // Création de l'objet Date
         Date date(year, month, day);

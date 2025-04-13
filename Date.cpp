@@ -2,7 +2,7 @@
 #include <stdexcept>
 
 // Méthode privée pour vérifier si une date est valide
-bool Date::isValid(int y, int m, int d) const {
+bool Date::isValid(int y, int m, int d) {
     // Vérifier si l'année est valide
     if (y != 2024 && y != 2025) return false;
 
