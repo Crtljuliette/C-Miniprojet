@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Ressources-20250407/RadarImage.h"
-
 /*
 int main() {
     const std::string filename = "radar/2024-11-02.tif";
@@ -57,4 +56,4 @@ int main() {
 
     return 0;
 }
-//*/
+/*/

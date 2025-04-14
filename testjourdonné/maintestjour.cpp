@@ -1,23 +1,31 @@
+
 #include <iostream>
+#include <iomanip>
 #include "Date.h"
-#include "Ressources-20250407/RadarImage.h"
-#include "DATABANK/Databank.h"
-
+#include "Databank.h"
+#include "RadarImage.h"
 /*
-int main(){
-  Databank db("STATION/stations.csv","donnees.csv");
-  RadarImage radar("radar/2024-11-20.tif");
-  Date date(2024,11,20);
+int main() {
+    Date date(2024, 11, 20);
 
-  for (auto it = db.begin(); it != db.end(); ++it)
-    Station station = *it;
-    float rain_station = db.getRainfall(station,date);
-    float rain_radar = radar.getRainfallAtCoordinates(station.getLatitude(),station.getLongitude());
+    Databank db("stations.csv", "donnees.csv");
+    RadarImage radar("radar/2024-11-02.tif");
 
-   std::cout << "Station: " << station.getName() << ", Rainfall (Station): " << rain_station << " mm, Rainfall (Radar): " << rain_radar << " mm" << std::endl;
-  }
+    std::cout << "id_station,nom_station,pluie_station,pluie_radar\n";
 
-  return 0;  
- 
+    for (auto it = db.begin(); it != db.end(); ++it) {
+        const Station& station = it->second;
+        float stationRain = db.getRainfallData(station, date);
+        float radarRain = radar.getRainfallAtCoordinates(station.getLAT(), station.getLON());
+
+        std::cout << station.getNUM_POSTE() << ","
+                  << station.getNOM_USUEL() << ","
+                  << std::fixed << std::setprecision(2)
+                  << stationRain << ","
+                  << radarRain << "\n";
+    }
+
+    return 0;
 }
+
 /*/

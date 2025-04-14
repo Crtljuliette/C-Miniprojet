@@ -30,8 +30,12 @@ public:
 	int getWidth() const;
 	int getHeight() const;
 	bool isValid() const;
+	static float getConversionFactor() {
+		return CONVERSION_FACTOR;
+	}
 	uint16_t getDataAtPixel(int row, int column) const;
 	float getRainfallAtCoordinates(float lat, float lon) const;
+
 
 };
 

@@ -15,4 +15,4 @@ args = "g++ -std=c++17 -I Ressources-20250407 -I Ressources-20250407/tinytiff ma
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "./main 2025-04-14 1"
+args = "./main 2024-11-20 1"
