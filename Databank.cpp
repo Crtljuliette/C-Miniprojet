@@ -46,6 +46,8 @@ void Databank::loadStations(const std::string& stationsFilename) {
 
 // Méthode privée pour charger les données des stations
 void Databank::loadData(const std::string& dataFilename) {
+    // Déclaration du compteur d'erreurs au début de la méthode
+    int invalidDateCount = 0;
     // Ouverture du fichier
     std::ifstream file(dataFilename);
     if (!file.is_open()) {
@@ -90,8 +92,7 @@ void Databank::loadData(const std::string& dataFilename) {
 
         // Vérifier si la date est valide avant de créer l'objet Date
         if (!Date::isValid(year, month, day)) {
-            std::cerr << "Avertissement: Date invalide détectée et ignorée: "
-                      << year << "-" << month << "-" << day << std::endl;
+            invalidDateCount++;
             continue; // Ignorer les lignes avec des dates invalides
         }
 
@@ -112,6 +113,9 @@ void Databank::loadData(const std::string& dataFilename) {
     }
 
     file.close();
+    if (invalidDateCount > 0) {
+        std::cerr << "Information: " << invalidDateCount << " lignes avec des dates invalides ont été ignorées." << std::endl;
+    }
 }
 
 // Méthodes pour itérer sur les stations
