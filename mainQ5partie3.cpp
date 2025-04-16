@@ -70,11 +70,15 @@ int main(int argc, char** argv) {
         ComparisonAlgorithm* algorithm = nullptr;
         if (algoChoice == 1) {
             algorithm = new SimplePixel(databank, radarImage);
+            std::cout << "Utilisation de l'algorithme SimplePixel" << std::endl;
         } else { // algoChoice == 2
             algorithm = new AveragePixel(databank, radarImage);
+            std::cout << "Utilisation de l'algorithme AveragePixel" << std::endl;
         }
 
         // Exécuter l'algorithme pour la date spécifiée
+        std::cout << "Comparaison des données pour la date: " << date << std::endl;
+        std::cout << "ID Station,Nom Station,Pluviométrie station,Pluviométrie radar" << std::endl;
         algorithm->getDataForDay(date);
 
         // Libérer la mémoire

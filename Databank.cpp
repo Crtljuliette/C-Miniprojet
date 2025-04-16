@@ -13,7 +13,7 @@ Databank::Databank(const std::string& stationsFilename, const std::string& dataF
     loadData(dataFilename);
 }
 
-// Méthode privée pour charger la liste des stations
+// Méthode pour charger la liste des stations
 void Databank::loadStations(const std::string& stationsFilename) {
     // Ouverture du fichier
     std::ifstream file(stationsFilename);
@@ -44,7 +44,7 @@ void Databank::loadStations(const std::string& stationsFilename) {
     file.close();
 }
 
-// Méthode privée pour charger les données des stations
+// Méthode pour charger les données des stations
 void Databank::loadData(const std::string& dataFilename) {
     // Déclaration du compteur d'erreurs au début de la méthode
     int invalidDateCount = 0;
@@ -108,7 +108,7 @@ void Databank::loadData(const std::string& dataFilename) {
         }
 
         // Utiliser insert_or_assign pour les données de pluviométrie aussi
-        auto& dateMap = rainfall_data[stationId]; // On peut toujours utiliser [] ici car la map est de <string, map>
+        auto& dateMap = rainfall_data[stationId];
         dateMap.insert_or_assign(date, rainfall);
     }
 

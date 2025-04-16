@@ -13,7 +13,7 @@ Station::Station(const std::string& csvLine) {
     std::string field;
 
     std::getline(ss, NUM_POSTE, ';');   // idd station
-    std::getline(ss, NOM_USUEL, ';');         // NOM_USUEL station
+    std::getline(ss, NOM_USUEL, ';');     // NOM_USUEL station
     std::getline(ss, field, ';');       // LAT
     LAT = std::stod(field);
     std::getline(ss, field, ';');       // LON
